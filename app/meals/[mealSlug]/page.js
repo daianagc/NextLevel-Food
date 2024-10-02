@@ -3,6 +3,19 @@ import classes from "./page.module.css";
 import { getMeal } from "@/lib/meals";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata() {
+  const meal = getMeal(params.mealSlug); //Nos permite de forma dinámica mostrar el titulo según la comida
+
+  if (!meal) {
+    //Función que detiene la ejecución del componente, y muestra la pagina de error mas cercana
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
 export default function MealsDetailsPage({ params }) {
   const meal = getMeal(params.mealSlug);
 
